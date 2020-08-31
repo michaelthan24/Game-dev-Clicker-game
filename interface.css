@@ -8,7 +8,14 @@ button {
     display: inline-block;
     font-size: 16px;    
 }
-
+.header {
+    font-size: 40px;
+    text-align: center;
+    font-family:sans-serif;
+    padding: 10px;
+    border: black solid 5px;
+    border-radius: 20px;
+}
 button:hover {
     background-color: #e7e7e7; 
 }
@@ -18,6 +25,6 @@ button:active {
 }
 
 .column {
-  float: left;
-  width: 50%;
+    float: left;
+    width: 45%;   
 }

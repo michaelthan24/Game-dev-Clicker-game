@@ -6,8 +6,8 @@ var costs = {"pickaxe":15,
 	     "miner":200,
 	     "miner_pickaxe":15}
 var growthRate = {"pickaxe":1.25,
-		  "miner":1.25,
-	     "miner_pickaxe":1.75}
+		  "miner":1.15,
+	     "miner_pickaxe":1.50}
 
 var increments = [{"input":["miner","miner_pickaxe"],
 		   "output":"gold"}]
