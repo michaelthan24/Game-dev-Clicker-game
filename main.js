@@ -1,30 +1,40 @@
 var timer = 256
 var tickRate = 16
 var visualRate = 256
-var resources = {"gold":0,"pickaxe":1}
-var costs = {"pickaxe":15,
-	     "miner":200,
-	     "miner_pickaxe":15}
-var growthRate = {"pickaxe":1.25,
+var resources = {"cash":200,"beers":0,"BTquality":1,"manager":0}
+var costs = {"BTquality":15,
+	     "miner":150,
+	     "miner_pickaxe":15,"beer_cost": 100,"manager_cost":1000}
+var growthRate = {"BTquality":1.01,
 		  "miner":1.05,
-	     "miner_pickaxe":1.15}
+	     "miner_pickaxe":1.15,"manager":1.10} 
 
 var increments = [{"input":["miner","miner_pickaxe"],
-		   "output":"gold"}]
+		   "output":"cash"}]
 
-var unlocks = {"pickaxe":{"gold":10},
-	       "miner":{"gold":100},
-	       "miner_pickaxe":{"miner":1}}
+var unlocks = {"BTquality":{"cash":10},
+	       "miner":{"cash":100},
+	       "miner_pickaxe":{"miner":1},"manager":{"cash":800}}
 
-function mineGold(num){
-    resources["gold"] += num*resources["pickaxe"]
+function serveDrinks(num){
+    if (resources["beers"] > 0) {
+    resources["cash"] += num*resources["BTquality"]
+    resources["beers"] = resources["beers"] - 1
     updateText()
+    }
+};
+function buyBeer(num) {
+    if (resources["cash"]>=100) {
+    resources["beers"]+=num
+    resources["cash"] = resources["cash"] - costs["beer_cost"]
+    document.getElementById("inventPopup").style.display="none"
+    }
 };
 
 function upgradeMinerPickaxe(num){
-    if (resources["gold"] >= costs["miner_pickaxe"]*num){
+    if (resources["cash"] >= costs["miner_pickaxe"]*num){
 	resources["miner_pickaxe"] += num
-	resources["gold"] -= num*costs["miner_pickaxe"]
+	resources["cash"] -= num*costs["miner_pickaxe"]
 	
 	costs["miner_pickaxe"] *= growthRate["miner_pickaxe"]
 	
@@ -32,30 +42,43 @@ function upgradeMinerPickaxe(num){
     }
 };
 
-function upgradePickaxe(num){
-    if (resources["gold"] >= costs["pickaxe"]*num){
-	resources["pickaxe"] += num
-	resources["gold"] -= num*costs["pickaxe"]
+function upgradeBTquality(num){
+    if (resources["cash"] >= costs["BTquality"]*num){
+	resources["BTquality"] += num
+	resources["cash"] -= num*costs["BTquality"]
 	
-	costs["pickaxe"] *= growthRate["pickaxe"]
+	costs["BTquality"] *= growthRate["BTquality"]
 	
 	updateText()
     }
 };
+function hireManager(num) {
+    if (resources["cash"]>= costs["manager_cost"]*num) {
+        if(!resources["manager"]) {
+            resources["manager"] = 0
+        }
+        resources["manager"] += num 
+        resources["cash"] -= num*costs["manager_cost"]
+        
+        costs["manager_cost"] *= growthRate["manager"]
+        
+        updateText()
+    }
+};
 function hireMiner(num){
-    if (resources["gold"] >= costs["miner"]*num){
-	if (!resources["miner"]){
-	    resources["miner"] = 0
-	}
-	if (!resources["miner_pickaxe"]){
-	    resources["miner_pickaxe"] = 1
-	}
-	resources["miner"] += num
-	resources["gold"] -= num*costs["miner"]
+    if (resources["cash"] >= costs["miner"]*num){
+	   if (!resources["miner"]){
+	       resources["miner"] = 0
+	   }
+	   if (!resources["miner_pickaxe"]){
+	       resources["miner_pickaxe"] = 1
+	   }
+	   resources["miner"] += num
+	   resources["cash"] -= num*costs["miner"]
 	
-	costs["miner"] *= growthRate["miner"]
+	   costs["miner"] *= growthRate["miner"]
 	
-	updateText()
+	   updateText()
 
 	
     }
@@ -70,7 +93,7 @@ function updateText(){
 	    unlocked = unlocked && resources[criterion] >= unlocks[key][criterion]
 	}
 	if (unlocked){
-	    for (var element of document.getElementsByClassName("show_"+key)){		
+	    for (var element of document.getElementsByClassName("show_"+key)){		 
 		element.style.display = "block"
 	    }
 	}
@@ -94,20 +117,30 @@ window.setInterval(function(){
 
     
     for (var increment of increments){
-	total = 1
-	for (var input of increment["input"]){
-	    total *= resources[input]
-	    
-	}
-	if (total){
-	    console.log(total)
-	    resources[increment["output"]] += total/tickRate
-	}
+        total = 10
+        for (var input of increment["input"]){
+	       total *= resources[input]  
+        }
+        if (resources["manager"] == 0) {
+            document.getElementById("inventPopup").style.display="block"
+        }
+        if (resources["manager"] >= 1 && resources["beers"] == 0) {
+            resources["cash"] = resources["cash"] - 100
+            resources["beers"] = resources["beers"] + 200
+        }
+        if (total && resources["beers"] > 0){
+	       console.log(total)
+           resources["beers"] = resources["beers"] - 1
+	       resources[increment["output"]] += total/tickRate
+        }
+        if (resources["beers"] > 0) {
+            document.getElementById("inventPopup").style.display="none"
+        }
     }
     
     if (timer > visualRate){
-	timer -= visualRate
-	updateText()
+	   timer -= visualRate
+	   updateText()
     }
   
 
