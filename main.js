@@ -2,7 +2,7 @@ var timer = 256
 var tickRate = 16
 var visualRate = 256
 var msg = false
-var resources = {"cash":150,"beers":0,"BTquality":1,"manager":0}
+var resources = {"cash":150,"beers":0,"BTquality":1,"manager":0,"barLevel":1,"bartender": 0}
 var costs = {"BTquality":15,
 	     "bartender":200,
 	     "bartender_tip":15,"beer_cost": 100,"manager_cost":1000}
@@ -75,22 +75,25 @@ function hireManager(num) {
 };
 function hireBartender(num){
     if (resources["cash"] >= costs["bartender"]*num){
-	   if (!resources["bartender"]){
-	       resources["bartender"] = 0
-	   }
-	   if (!resources["bartender_tip"]){
-	       resources["bartender_tip"] = 1
-	   }
-	   resources["bartender"] += num
-	   resources["cash"] -= num*costs["bartender"]
+        if (resources["bartender"] < resources["barLevel"]*5) {
+            if (!resources["bartender"]){
+	           resources["bartender"] = 0
+            }
+            if (!resources["bartender_tip"]){
+	           resources["bartender_tip"] = 1 
+            }
+            resources["bartender"] += num
+            resources["cash"] -= num*costs["bartender"]
 	
-	   costs["bartender"] *= growthRate["bartender"]
+            costs["bartender"] *= growthRate["bartender"]
 	   
-       document.getElementById("message").innerHTML = "You have just hired a new bartender. He will get right to work!"    
+            document.getElementById("message").innerHTML = "You have just hired a new bartender. He will get right to work!"    
         
-	   updateText()
-
-	
+            updateText()
+        }
+        else {
+            document.getElementById("message").innerHTML = "Need to upgrade bar level before hiring more bartenders!"
+        }
     }
 };
 
@@ -129,6 +132,7 @@ window.setInterval(function(){
         for (var input of increment["input"]){
 	       total *= resources[input]  
         }
+        document.getElementById("barLvl").innerHTML = "Bar level: " + resources["barLevel"]
         if (resources["manager"] == 0) {
             document.getElementById("inventPopup").style.display="block"
         }
