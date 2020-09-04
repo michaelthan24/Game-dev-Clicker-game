@@ -5,7 +5,7 @@ var msg = false
 var resources = {"cash":150,"beers":0,"BTquality":1,"manager":0,"barLevel":1,"bartender": 0}
 var costs = {"BTquality":15,
 	     "bartender":200,
-	     "bartender_tip":15,"beer_cost": 100,"manager_cost":1000}
+	     "bartender_tip":15,"beer_cost": 100,"manager_cost":1000,"bar_level":50000}
 var growthRate = {"BTquality":1.01,
 		  "bartender":1.05,
 	     "bartender_tip":1.15,"manager":1.10} 
@@ -15,7 +15,7 @@ var increments = [{"input":["bartender","bartender_tip"],
 
 var unlocks = {"BTquality":{"cash":10},
 	       "bartender":{"cash":200},
-	       "bartender_tip":{"bartender":1},"manager":{"cash":800}}
+	       "bartender_tip":{"bartender":1},"manager":{"cash":800},"barUpgrade":{"bartender": 4}}
 
 function serveDrinks(num){
     if (resources["beers"] > 0) {
@@ -96,6 +96,15 @@ function hireBartender(num){
         }
     }
 };
+
+function upgradeBar(num) {
+    if (resources["cash"] >= costs["bar_level"]) {
+        resourcse["cash"] = resources["cash"] - costs["bar_level"]
+        resources["barLevel"] = resources["barLevel"] + num
+        updateText();
+    }
+};
+
 
 function updateText(){
     for (var key in unlocks){
