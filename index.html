@@ -3,38 +3,42 @@
     <head>
     <link rel="stylesheet" type="text/css" href="interface.css" />
     </head>
-    <body>
+    <body style="background-color: antiquewhite">
         <script type="text/javascript" src="main.js"></script>
         <div class="header">
             Bar Simulator? 
         </div> 
+        <div class="messageboard">
+            <h1>
+                Message updates
+            </h1>
+            <div id = "message" class="messageDialogue">
+                Let's start on your bar! Click the buy beer inventory to get started and start serving drinks!
+            </div>
+        </div>
         <div class="row">
-            <div class="column" style="padding: 10px;">
-                <!-- add seats and bars, start out with 100$, a keg gives 100$ profits-->
-                <!-- beer inventory and serve and runs out and buy inventory-->
-                <!-- manager buys beer when inventory reaches 0-->
-                <!-- manager buys beer when inventory reaches 0-->
+            <div class="column" style="padding: 10px; font-family: sans-serif;font-weight: 600; line-height: 2">
             
                 Cash: <span class="cash"></span>
                 <br>
                 Beers: <span class="beers"></span>
-                <span style="display:none" class="show_BTquality">Your bartender quality: <span class="BTquality"></span></span>
-                <span style="display:none" class="show_miner">Bartenders: <span class="miner"></span></span>
+                <span style="display:none" class="show_BTquality">Your bartending quality: <span class="BTquality"></span></span>
+                <span style="display:none" class="show_bartender">Bartenders: <span class="bartender"></span></span>
                 <!-- can only have a limited amount of bartenders per seats and limited seats per bar; one bartender per seats; one bar 200 seats,50 bartenders-->
-                <span style="display:none" class="show_miner_pickaxe">Bartender morale Level: <span class="miner_pickaxe"></span></span>
+                <span style="display:none" class="show_bartender_tip">Bartender morale Level: <span class="bartender_tip"></span></span>
                 <span style="display: none" class="show_manager">Managers: <span class="manager"></span></span>
             </div>
             <!-- add a message board that has text on it to say what is happening; ex: bartenders morale are up! People in town are loving ur bar... a celebrity came to ur bar, take a $10,000 tip!-->
+            <!-- add a variable for beer inventory space to increase as bar increase, more seats in bar, more add caps to bartenders for a bar-->
             <div class="column">
                     <!-- add buttons to add seats and add bar,  -->
-                    <!-- each beer will sell for $10-->
                     <button onClick="serveDrinks(10)">Serve Drinks</button>
                     <br>
-                    <button onClick="buyBeer(200)">Buy beer inventory : $100</button><button id="inventPopup" style="color: red"> ^^^Buy inventory to start bar</button>
-                    <button style="display:none" class="show_BTquality" onClick="upgradeBTquality(.10)"> Get training to receive more tips! : $<span class="BTquality_cost"></span>
-                    </button>
-                    <button style="display:none" class="show_miner" onClick="hireMiner(1)">Hire Bartenders: $<span class="miner_cost"></span></button>
-                    <button style="display:none" class="show_miner" onClick="upgradeMinerPickaxe(1)">Give bartenders bonus! : $<span class="miner_pickaxe_cost"></span></button>
+                    <button onClick="buyBeer(200)">Buy beer inventory : $100</button>
+                    <span id="inventPopup" style="color: white; font-family:monospace;font-weight: 600;padding: 15px 32px;background-color: red; width: 250px; border: black solid 3px; border-radius: 10px"> ^^^Buy inventory for bar!</span>
+                    <button style="display:none" class="show_BTquality" onClick="upgradeBTquality(.10)"> Get training to receive more tips! : $<span class="BTquality_cost"></span></button>
+                    <button style="display:none" class="show_bartender" onClick="hireBartender(1)">Hire Bartenders: $<span class="bartender_cost"></span></button>
+                    <button style="display:none" class="show_bartender" onClick="upgradeBartender(1)">Give bartenders bonus! : $<span class="bartender_tip_cost"></span></button>
                     <button style="display:none" class="show_manager" onClick="hireManager(1)">Hire a manager $<span class="manager_cost_cost"></span></button>
 
             </div>

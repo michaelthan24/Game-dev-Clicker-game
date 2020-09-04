@@ -1,20 +1,21 @@
 var timer = 256
 var tickRate = 16
 var visualRate = 256
-var resources = {"cash":200,"beers":0,"BTquality":1,"manager":0}
+var msg = false
+var resources = {"cash":150,"beers":0,"BTquality":1,"manager":0}
 var costs = {"BTquality":15,
-	     "miner":150,
-	     "miner_pickaxe":15,"beer_cost": 100,"manager_cost":1000}
+	     "bartender":200,
+	     "bartender_tip":15,"beer_cost": 100,"manager_cost":1000}
 var growthRate = {"BTquality":1.01,
-		  "miner":1.05,
-	     "miner_pickaxe":1.15,"manager":1.10} 
+		  "bartender":1.05,
+	     "bartender_tip":1.15,"manager":1.10} 
 
-var increments = [{"input":["miner","miner_pickaxe"],
+var increments = [{"input":["bartender","bartender_tip"],
 		   "output":"cash"}]
 
 var unlocks = {"BTquality":{"cash":10},
-	       "miner":{"cash":100},
-	       "miner_pickaxe":{"miner":1},"manager":{"cash":800}}
+	       "bartender":{"cash":200},
+	       "bartender_tip":{"bartender":1},"manager":{"cash":800}}
 
 function serveDrinks(num){
     if (resources["beers"] > 0) {
@@ -25,22 +26,25 @@ function serveDrinks(num){
 };
 function buyBeer(num) {
     if (resources["cash"]>=100) {
+    msg = true
     resources["beers"]+=num
     resources["cash"] = resources["cash"] - costs["beer_cost"]
     document.getElementById("inventPopup").style.display="none"
     }
 };
 
-function upgradeMinerPickaxe(num){
-    if (resources["cash"] >= costs["miner_pickaxe"]*num){
-	resources["miner_pickaxe"] += num
-	resources["cash"] -= num*costs["miner_pickaxe"]
+function upgradeBartender(num){
+    if (resources["cash"] >= costs["bartender_tip"]*num){
+	resources["bartender_tip"] += num
+	resources["cash"] -= num*costs["bartender_tip"]
 	
-	costs["miner_pickaxe"] *= growthRate["miner_pickaxe"]
-	
+	costs["bartender_tip"] *= growthRate["bartender_tip"]
+	document.getElementById("message").innerHTML = "Your bartenders love you as a boss for giving them an extra bonus. They are working extra hard for you now!"
+    
 	updateText()
     }
 };
+
 
 function upgradeBTquality(num){
     if (resources["cash"] >= costs["BTquality"]*num){
@@ -48,6 +52,8 @@ function upgradeBTquality(num){
 	resources["cash"] -= num*costs["BTquality"]
 	
 	costs["BTquality"] *= growthRate["BTquality"]
+    
+    document.getElementById("message").innerHTML = "The customers are loving your service, they will leave some extra tips!"
 	
 	updateText()
     }
@@ -62,29 +68,31 @@ function hireManager(num) {
         
         costs["manager_cost"] *= growthRate["manager"]
         
+        document.getElementById("message").innerHTML = "You just hired a new manager. They will keep your bar stocked up on beer inventory"
+        
         updateText()
     }
 };
-function hireMiner(num){
-    if (resources["cash"] >= costs["miner"]*num){
-	   if (!resources["miner"]){
-	       resources["miner"] = 0
+function hireBartender(num){
+    if (resources["cash"] >= costs["bartender"]*num){
+	   if (!resources["bartender"]){
+	       resources["bartender"] = 0
 	   }
-	   if (!resources["miner_pickaxe"]){
-	       resources["miner_pickaxe"] = 1
+	   if (!resources["bartender_tip"]){
+	       resources["bartender_tip"] = 1
 	   }
-	   resources["miner"] += num
-	   resources["cash"] -= num*costs["miner"]
+	   resources["bartender"] += num
+	   resources["cash"] -= num*costs["bartender"]
 	
-	   costs["miner"] *= growthRate["miner"]
-	
+	   costs["bartender"] *= growthRate["bartender"]
+	   
+       document.getElementById("message").innerHTML = "You have just hired a new bartender. He will get right to work!"    
+        
 	   updateText()
 
 	
     }
 };
-
-
 
 function updateText(){
     for (var key in unlocks){
@@ -124,6 +132,10 @@ window.setInterval(function(){
         if (resources["manager"] == 0) {
             document.getElementById("inventPopup").style.display="block"
         }
+        if (resources["manager"]==0 && msg==true && resources["beers"]==0) {
+            document.getElementById("message").innerHTML = "Buy a manager to have your bar always stocked up!"
+            }
+
         if (resources["manager"] >= 1 && resources["beers"] == 0) {
             resources["cash"] = resources["cash"] - 100
             resources["beers"] = resources["beers"] + 200

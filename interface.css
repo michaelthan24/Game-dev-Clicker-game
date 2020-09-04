@@ -6,7 +6,29 @@ button {
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;    
+    font-size: 16px;   
+    border: black solid 3px;
+    border-radius: 10px;
+    margin: 5px;
+}
+.messageboard {
+    margin: 20px 400px 10px 400px;
+    border: black dashed 5px;
+    border-radius: 20px;
+    padding: 0px 0px 70px 0px;
+    background-color: #2053F1;
+    color: yellow;
+}
+.messageboard h1 {
+    font-family: sans-serif;
+    text-align: center;
+    font-size: 20px;
+    font-style: italic;
+    text-decoration-line: underline;
+}
+.messageDialogue {
+    text-align: center;
+    font-family: courier;
 }
 .header {
     font-size: 40px;
