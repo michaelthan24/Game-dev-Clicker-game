@@ -22,6 +22,8 @@
                 Cash: <span class="cash"></span>
                 <br>
                 Beers: <span class="beers"></span>
+                <br>
+                <span id="beersold">Beers sold: </span>
                 <span style="display:none" class="show_BTquality">Your bartending quality: <span class="BTquality"></span></span>
                 <span style="display:none" class="show_bartender">Bartenders: <span class="bartender"></span></span>
                 <!-- can only have a limited amount of bartenders per seats and limited seats per bar; one bartender per seats; one bar 200 seats,50 bartenders-->
@@ -35,13 +37,13 @@
                     <!-- add buttons to add seats and add bar,  -->
                     <button onClick="serveDrinks(5)">Serve Drinks (pays $5)</button>
                     <br>
-                    <button onClick="buyBeer(200)">Buy beer inventory : $100</button>
+                    <button onClick="buyBeer(200)">Buy beer inventory : -$100</button>
                     <span id="inventPopup" style="color: white; font-family:monospace;font-weight: 600;padding: 15px 32px;background-color: red; width: 250px; border: black solid 3px; border-radius: 10px"> ^^^Buy inventory for bar!</span>
-                    <button style="display:none" class="show_BTquality" onClick="upgradeBTquality(.10)"> Get training to receive more tips! : $<span class="BTquality_cost"></span></button>
-                    <button style="display:none" class="show_bartender" onClick="hireBartender(1)">Hire Bartenders: $<span class="bartender_cost"></span> (pays $3 a beer)</button>
-                    <button style="display:none" class="show_bartender" onClick="upgradeBartender(1)">Give bartenders bonus! : $<span class="bartender_tip_cost"></span></button>
-                    <button style="display:none" class="show_manager" onClick="hireManager(1)">Hire a manager $<span class="manager_cost_cost"></span></button>
-                    <button style="display:none" class="show_barUpgrade" onClick="upgradeBar(1)">Upgrade your bar level $<span class="bar_level_cost"></span></button>
+                    <button style="display:none" class="show_BTquality" onClick="upgradeBTquality(.20)"> Get training to receive more tips! : -$<span class="BTquality_cost"></span></button>
+                    <button style="display:none" class="show_bartender" onClick="hireBartender(1)">Hire Bartenders: -$<span class="bartender_cost"></span> (pays $3 a beer)</button>
+                    <button style="display:none" class="show_bartender" onClick="upgradeBartender(1)">Give bartenders bonus! : -$<span class="bartender_tip_cost"></span></button>
+                    <button style="display:none" class="show_manager" onClick="hireManager(1)">Hire a manager -$<span class="manager_cost_cost"></span></button>
+                    <button style="display:none" class="show_barUpgrade" onClick="upgradeBar(1)">Upgrade your bar level -$<span class="bar_level_cost"></span></button>
 
 
             </div>
