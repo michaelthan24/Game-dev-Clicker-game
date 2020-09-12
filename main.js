@@ -24,6 +24,7 @@ function serveDrinks(num){
     resources["cash"] += num*resources["BTquality"]
     resources["beers"] = resources["beers"] - 1
     resources["beerSold"] += 1
+    document.getElementById("message").innerHTML = "Watch for some achievements when you sell a certain amount of beers ;)"
     updateText()
     }
 };
@@ -104,7 +105,7 @@ function upgradeBar(num) {
             resources["cash"] = resources["cash"] - costs["bar_level"]
             resources["barLevel"] = resources["barLevel"] + num
             costs["bar_level"] = costs["bar_level"] * 1.4
-            
+            document.getElementById("message").innerHTML = "You have just upgraded your bar! You can now hire more bartenders!"
             updateText();
             
         }
@@ -176,16 +177,25 @@ window.setInterval(function(){
             document.getElementById("message").innerHTML = "100 beers sold... better keep going you want to stay in business!"
         }
         if (resources["beerSold"]==1000) {
-            document.getElementById("message").innerHTML = "1000 beers sold... Not bad, but you are far from the talk of the town"
+            document.getElementById("message").innerHTML = "1000 beers sold... Not bad, but you are far from the talk of the town!"
+        }
+        if (resources["beerSold"]==5000) {
+            document.getElementById("message").innerHTML = "5000 beers sold... Now you are starting to make some noise!"
         }
         if (resources["beerSold"]==10000) {
-            document.getElementById("message").innerHTML = "10000 beers sold... Now you are starting to make some noise"
+            document.getElementById("message").innerHTML = "10000 beers sold... You got people from out of state coming to drink at your bar! :O"
+        }
+        if (resources["beerSold"]==50000) {
+            document.getElementById("message").innerHTML = "50000 beers sold... You got people from out of state coming to drink at your bar! :O"
+        }
+        if (resources["beerSold"]==75000) {
+            document.getElementById("message").innerHTML = "75000 beers sold... Budlight are approaching you for brand deals!"
         }
         if (resources["beerSold"]==100000) {
             document.getElementById("message").innerHTML = "100000 beers sold... You are beginning to draw celebrity attention!"
         }
         if (resources["beerSold"]==1000000) {
-            document.getElementById("message").innerHTML = "1000000 beers sold... You have the hottest bar in LA!"
+            document.getElementById("message").innerHTML = "1000000 beers sold... You have the hottest bar in the state!"
         }
         if (resources["beerSold"]==10000000) {
             document.getElementById("message").innerHTML = "10000000 beers sold, You are now keeping up with the Kardashians and Kanye!"
